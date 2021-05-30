@@ -97,9 +97,9 @@ fanPages = [ "abcnews.au", "sbsnews", "9News", "7NewsAustralia",
 
 allPostsDf, allCommentsDf = getPostAndComments(fanPages, offset = 10)
 
-# Writing a CSV file with all posts
+print("\nWriting a CSV file with all posts...")
 allPostsDf.to_csv(path + "posts.csv",index=False)
 
-# Writing a CSV file with all posts comments
+print("\nWriting a CSV file with all posts comments...")
 allCommentsDf.to_csv(path + "comments.csv",index=False)
 
