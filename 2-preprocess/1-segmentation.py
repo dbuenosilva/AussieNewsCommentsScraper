@@ -19,7 +19,6 @@
 import sys
 import pathlib
 import pandas as pd
-import numpy as np
 import nltk
 
 path = str(pathlib.Path(__file__).resolve().parent) + "/"
@@ -47,9 +46,15 @@ for index, row in postsDf.iterrows():
     # segmenting the text into senteces
     text = row["post_text"]
     
+    # removing \t \r and \n caracteres
+    #text = text.strip("\n\t\r")  # problems with strip here
+    text = text.replace("\n"," ")
+    text = text.replace("\t"," ")
+    text = text.replace("\r"," ")
+    
     # a list with all sentences
     myList = nltk.sent_tokenize(text)
-    
+        
     # converting the list to DataFrame to remove duplicates rows.
     sentencesList = pd.DataFrame( myList ,columns=['sentence'])     
     
@@ -63,8 +68,7 @@ for index, row in postsDf.iterrows():
         print('\nDropping duplicated rowns')
         sentencesList.drop_duplicates(inplace=True)
         
-    # saving dataframe
-#    segmentedTextDf = segmentedTextDf.append( [ [ row["post_id"], sentencesList.to_dict(orient="list") ]], ignore_index=True  )
+    # saving dataframe with the post_id and segmented sentences.
     segmentedTextDf = segmentedTextDf.append( [ [ row["post_id"], sentencesList.values ]], ignore_index=True  )
     
 segmentedTextDf = segmentedTextDf.rename(columns={ segmentedTextDf.columns[0]: "post_id" })
