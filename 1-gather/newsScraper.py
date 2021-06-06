@@ -51,7 +51,7 @@ def getPostAndComments(fanPages, offset):
         results =  get_posts(fanpageId, pages=offset, options={"comments": True})
         for post in results:
             
-            print("retrieving post id ",post["post_id"],"...") 
+            print("retrieving post id ",post["post_id"]) 
         
             # array with only relevant information about this post       
             data = [ [ post["post_id"],post["username"],post["time"],post["post_url"],
@@ -75,31 +75,4 @@ def getPostAndComments(fanPages, offset):
             
     return( allPostsDf, allCommentsDf )
 
-
-
-""" Fan pages to retrieve posts and comments:
-    
-#https://www.facebook.com/abcnews.au
-https://www.facebook.com/sbsnews/
-https://www.facebook.com/9News/
-https://www.facebook.com/7NewsAustralia/
-https://www.facebook.com/10NewsFirst/
-https://www.facebook.com/news.com.au/
-
-
-*** Facebook may block your IP due to scraper ***
-
-"""
-
-fanPages = [ "abcnews.au", "sbsnews", "9News", "7NewsAustralia",
-             "10NewsFirst", "news.com.au" ]
-
-
-allPostsDf, allCommentsDf = getPostAndComments(fanPages, offset = 10)
-
-print("\nWriting a CSV file with all posts...")
-allPostsDf.to_csv(path + "posts.csv",index=False)
-
-print("\nWriting a CSV file with all posts comments...")
-allCommentsDf.to_csv(path + "comments.csv",index=False)
 
